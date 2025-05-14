@@ -1,4 +1,3 @@
-import 'package:loki_logger/src/log_event.dart';
 
 /// Log levels based on severity
 enum Level {

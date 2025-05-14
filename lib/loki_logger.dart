@@ -1,4 +1,3 @@
-library loki_logger;
 
 export 'src/logger.dart';
 export 'src/loki_config.dart';
