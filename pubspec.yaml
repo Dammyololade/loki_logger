@@ -1,6 +1,6 @@
 name: loki_logger
 description: "Flutter plugin for shipping logs to a Loki Server"
-version: 1.0.0
+version: 1.0.1
 homepage: "https://github.com/Dammyololade/loki_logger"
 
 environment:

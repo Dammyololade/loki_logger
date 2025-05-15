@@ -1,4 +1,10 @@
+## 1.0.1
+Released on 2025-05-14
+* Updated README.md
+* Added DOCUMENTATION.md
+
 ## 1.0.0
+Released on 2025-05-14
 
 * Initial release of the Loki Logger package
 * Core functionality for sending logs to Grafana Loki server
