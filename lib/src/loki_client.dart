@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:loki_logger/src/loki_config.dart';
 
 class LokiClient {
-
   /// Configuration for the logger to connect to Loki Server
   final LokiConfig config;
 
@@ -15,11 +14,11 @@ class LokiClient {
   /// Timer for batch sending
   Timer? _batchTimer;
 
-  LokiClient({required this.config} ){
+  LokiClient({required this.config}) {
     if (config.batching) {
       _batchTimer = Timer.periodic(
         Duration(seconds: config.interval),
-            (_) => _sendBatch(),
+        (_) => _sendBatch(),
       );
     }
   }
@@ -43,7 +42,7 @@ class LokiClient {
     Map<String, String>? customLabels,
   }) {
     final timestamp =
-    config.replaceTimestamp ? DateTime.now() : (time ?? DateTime.now());
+        config.replaceTimestamp ? DateTime.now() : (time ?? DateTime.now());
     final nanoseconds = timestamp.microsecondsSinceEpoch * 1000;
 
     // Combine message with error and stack trace if present
@@ -71,10 +70,10 @@ class LokiClient {
 
   /// Prepares the labels for a log entry
   String _prepareLabels(
-      String level,
-      String? loggerName,
-      Map<String, String>? customLabels,
-      ) {
+    String level,
+    String? loggerName,
+    Map<String, String>? customLabels,
+  ) {
     final allLabels = <String, String>{'level': level};
 
     // Add logger name if provided
@@ -93,9 +92,8 @@ class LokiClient {
     }
 
     // Format labels as Loki expects: {key="value",key2="value2"}
-    final formattedLabels = allLabels.entries
-        .map((e) => '${e.key}="${e.value}"')
-        .join(',');
+    final formattedLabels =
+        allLabels.entries.map((e) => '${e.key}="${e.value}"').join(',');
 
     return '{$formattedLabels}';
   }
@@ -118,9 +116,9 @@ class LokiClient {
     try {
       // Prepare streams for Loki API
       final streams = logs.fold<Map<String, List<List<String>>>>({}, (
-          map,
-          log,
-          ) {
+        map,
+        log,
+      ) {
         final labels = log['labels'] as String;
         final entry = <String>[log['timestamp'], log['message']];
 
@@ -132,8 +130,7 @@ class LokiClient {
       });
 
       // Format for Loki API
-      final streamsData =
-      streams.entries.map((entry) {
+      final streamsData = streams.entries.map((entry) {
         // Parse the label string into a proper Map
         final labelStr = entry.key.substring(
           1,
@@ -149,8 +146,7 @@ class LokiClient {
             final key = parts[0].trim();
             final value = parts[1].trim();
             // Remove surrounding quotes from value
-            final cleanValue =
-            value.startsWith('"') && value.endsWith('"')
+            final cleanValue = value.startsWith('"') && value.endsWith('"')
                 ? value.substring(1, value.length - 1)
                 : value;
             labelMap[key] = cleanValue;

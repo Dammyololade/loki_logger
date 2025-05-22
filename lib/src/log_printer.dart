@@ -14,16 +14,16 @@ class SimplePrinter extends LogPrinter {
 
   @override
   List<String> log(LogEvent event) {
-    String output = '';
+    final buffer = StringBuffer();
     if (printTime) {
-      output += '${event.time.toString()} ';
+      buffer.write('${event.time} ');
     }
-    output += '[${event.level.name}]';
+    buffer.write('[${event.level.name}]');
     if (event.loggerName != null) {
-      output += ' ${event.loggerName}:';
+      buffer.write(' ${event.loggerName}:');
     }
-    output += ' ${event.formattedMessage}';
-    return [output];
+    buffer.write(' ${event.formattedMessage}');
+    return [buffer.toString()];
   }
 }
 

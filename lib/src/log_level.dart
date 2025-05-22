@@ -1,4 +1,3 @@
-
 /// Log levels based on severity
 enum Level {
   trace(0, 'TRACE'),
