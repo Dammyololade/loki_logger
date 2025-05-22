@@ -1,4 +1,3 @@
-
 export 'src/logger.dart';
 export 'src/loki_config.dart';
 export 'src/loki_client.dart';

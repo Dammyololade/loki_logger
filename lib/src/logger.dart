@@ -34,9 +34,9 @@ class LokiLogger {
     LogFilter? filter,
     LogPrinter? printer,
     LogOutput? output,
-  }) : filter = filter ?? LevelFilter(level),
-       printer = printer ?? PrettyPrinter(),
-       output = output ?? ConsoleOutput();
+  })  : filter = filter ?? LevelFilter(level),
+        printer = printer ?? PrettyPrinter(),
+        output = output ?? ConsoleOutput();
 
   /// Log a trace message
   void t(

@@ -1,12 +1,14 @@
 import 'package:loki_logger/loki_logger.dart';
 
-import 'constant.dart';
+const host = 'http://localhost:3100';
+const username = 'example';
+const password = 'example';
 
 void main() {
   // Setup the LokiLogger with our new Logger implementation
   final logger = LokiLogger(
-    config: LokiConfig(
-      host: Constants.host,
+    config: const LokiConfig(
+      host: host,
       // Replace with your Loki server URL
       labels: {
         'app': 'flutter_test_app',
@@ -23,7 +25,7 @@ void main() {
       // Send logs every 5 seconds
       batching: true,
       // Use batching for better performance
-      basicAuth: "${Constants.username}:${Constants.password}",
+      basicAuth: "$username:$password",
     ),
     // Basic authentication credentials
     name: 'TestApp', // Name for this logger instance

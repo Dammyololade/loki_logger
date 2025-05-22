@@ -22,13 +22,13 @@ class LogEvent {
 
   /// Creates a formatted message including error and stack trace if present
   String get formattedMessage {
-    String result = message;
+    final buffer = StringBuffer(message);
     if (error != null) {
-      result += '\nError: $error';
+      buffer.writeln('\nError: $error');
     }
     if (stackTrace != null) {
-      result += '\nStack Trace: $stackTrace';
+      buffer.writeln('\nStack Trace: $stackTrace');
     }
-    return result;
+    return buffer.toString();
   }
 }

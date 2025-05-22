@@ -10,10 +10,10 @@ abstract class LogFilter {
 class DevelopmentFilter extends LogFilter {
   @override
   bool shouldLog(LogEvent event) {
-    assert(() {
-      return true;
-    }());
-    return false;
+    const kReleaseMode = bool.fromEnvironment('dart.vm.product');
+    const kProfileMode = bool.fromEnvironment('dart.vm.profile');
+    const kDebugMode = !kReleaseMode && !kProfileMode;
+    return kDebugMode;
   }
 }
 

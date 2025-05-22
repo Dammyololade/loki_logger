@@ -26,7 +26,7 @@ import 'package:mockito/mockito.dart' as _i1;
 
 class _FakeLokiConfig_0 extends _i1.SmartFake implements _i2.LokiConfig {
   _FakeLokiConfig_0(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
+      : super(parent, parentInvocation);
 }
 
 /// A class which mocks [LogOutput].
@@ -39,9 +39,9 @@ class MockLogOutput extends _i1.Mock implements _i3.LogOutput {
 
   @override
   void output(List<String>? lines) => super.noSuchMethod(
-    Invocation.method(#output, [lines]),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#output, [lines]),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [LogFilter].
@@ -53,12 +53,10 @@ class MockLogFilter extends _i1.Mock implements _i4.LogFilter {
   }
 
   @override
-  bool shouldLog(_i5.LogEvent? event) =>
-      (super.noSuchMethod(
-            Invocation.method(#shouldLog, [event]),
-            returnValue: false,
-          )
-          as bool);
+  bool shouldLog(_i5.LogEvent? event) => (super.noSuchMethod(
+        Invocation.method(#shouldLog, [event]),
+        returnValue: false,
+      ) as bool);
 }
 
 /// A class which mocks [LokiClient].
@@ -70,12 +68,10 @@ class MockLokiClient extends _i1.Mock implements _i6.LokiClient {
   }
 
   @override
-  _i2.LokiConfig get config =>
-      (super.noSuchMethod(
-            Invocation.getter(#config),
-            returnValue: _FakeLokiConfig_0(this, Invocation.getter(#config)),
-          )
-          as _i2.LokiConfig);
+  _i2.LokiConfig get config => (super.noSuchMethod(
+        Invocation.getter(#config),
+        returnValue: _FakeLokiConfig_0(this, Invocation.getter(#config)),
+      ) as _i2.LokiConfig);
 
   @override
   void log({
@@ -86,22 +82,23 @@ class MockLokiClient extends _i1.Mock implements _i6.LokiClient {
     DateTime? time,
     String? loggerName,
     Map<String, String>? customLabels,
-  }) => super.noSuchMethod(
-    Invocation.method(#log, [], {
-      #level: level,
-      #message: message,
-      #error: error,
-      #stackTrace: stackTrace,
-      #time: time,
-      #loggerName: loggerName,
-      #customLabels: customLabels,
-    }),
-    returnValueForMissingStub: null,
-  );
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(#log, [], {
+          #level: level,
+          #message: message,
+          #error: error,
+          #stackTrace: stackTrace,
+          #time: time,
+          #loggerName: loggerName,
+          #customLabels: customLabels,
+        }),
+        returnValueForMissingStub: null,
+      );
 
   @override
   void dispose() => super.noSuchMethod(
-    Invocation.method(#dispose, []),
-    returnValueForMissingStub: null,
-  );
+        Invocation.method(#dispose, []),
+        returnValueForMissingStub: null,
+      );
 }
