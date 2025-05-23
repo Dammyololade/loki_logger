@@ -1,9 +1,10 @@
 name: loki_logger
 description: "Dart utility library for publishing logs to a Loki Server"
-version: 1.0.2
+version: 1.0.3
 homepage: "https://github.com/Dammyololade/loki_logger"
 topics:
   - logging
+  - remote-logging
   - loki
 
 environment:

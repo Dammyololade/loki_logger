@@ -1,3 +1,7 @@
+### 1.0.3
+Released on 2025-05-23
+* Exposed functions to update labels
+
 ### 1.0.2
 Released on 2025-05-23
 * Added Support for dart 3.2
