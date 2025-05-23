@@ -27,6 +27,9 @@ class LokiLogger {
   /// If set, the logger will send log events to Loki Server
   final LokiConfig? config;
 
+  /// Loki client to send log events to Loki Server
+  late LokiClient? lokiClient;
+
   /// Creates a new Logger instance
   LokiLogger({
     this.name,
@@ -36,6 +39,7 @@ class LokiLogger {
     LogOutput? output,
   })  : filter = filter ?? LevelFilter(level),
         printer = printer ?? PrettyPrinter(),
+        lokiClient = config != null ? LokiClient(config: config) : null,
         output = output ?? ConsoleOutput();
 
   /// Log a trace message
@@ -120,9 +124,8 @@ class LokiLogger {
       output.output(lines);
     }
 
-    // Always add to stream for potential Loki integration
-    if (config case LokiConfig lokiConfig) {
-      LokiClient(config: lokiConfig).log(
+    if (lokiClient != null) {
+      lokiClient!.log(
         level: level.toLokiLevel(),
         message: message,
         error: error,
@@ -132,5 +135,13 @@ class LokiLogger {
         customLabels: event.customLabels,
       );
     }
+  }
+
+  /// Disposes resources used by this logger
+  ///
+  /// This should be called when the logger is no longer needed
+  /// to free up resources and prevent memory leaks.
+  void dispose() {
+    lokiClient?.dispose();
   }
 }

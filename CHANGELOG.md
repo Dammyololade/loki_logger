@@ -1,3 +1,9 @@
+### 1.0.2
+Released on 2025-05-23
+* Added Support for dart 3.2
+* Fixed issues with batching logs
+* Removed flutter dependency thanks to (Nicola Verbeeck)[https://github.com/NicolaVerbeeck]
+
 ## 1.0.1
 Released on 2025-05-14
 * Updated README.md
