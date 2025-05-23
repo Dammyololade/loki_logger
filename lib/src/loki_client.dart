@@ -11,6 +11,9 @@ class LokiClient {
   /// Queue of log entries waiting to be sent
   final List<Map<String, dynamic>> _queue = [];
 
+  /// Map of labels to be added to each log
+  final Map<String, String> _labels = {};
+
   /// Timer for batch sending
   Timer? _batchTimer;
 
@@ -21,6 +24,7 @@ class LokiClient {
         (_) => _sendBatch(),
       );
     }
+    _labels.addAll(config.labels ?? {});
   }
 
   /// Logs a message to Loki
@@ -82,8 +86,8 @@ class LokiClient {
     }
 
     // Add global labels
-    if (config.labels != null) {
-      allLabels.addAll(config.labels!);
+    if (_labels.isNotEmpty) {
+      allLabels.addAll(_labels);
     }
 
     // Add custom labels for this log
@@ -186,8 +190,25 @@ class LokiClient {
     }
   }
 
+  /// Adds labels to the logger
+  void addLabels(Map<String, String> labels) {
+    _labels.addAll(labels);
+  }
+
+  /// Removes all labels from the logger
+  void resetLabels() {
+    _labels.clear();
+  }
+
+  /// Removes a specific label from the logger
+  void removeLabel(String key) {
+    _labels.remove(key);
+  }
+
   /// Disposes resources used by this logger
   void dispose() {
+    _queue.clear();
+    _labels.clear();
     _batchTimer?.cancel();
     _sendBatch(); // Send any remaining logs
   }

@@ -59,4 +59,20 @@ void main() {
       'sessionId': '9999990-09099439-2983727328',
     });
   }
+
+  logger.lokiClient?.addLabels({
+    'user': 'John Doe',
+    'device': 'iPhone',
+    'os': 'iOS',
+    'os_version': '14.5',
+  });
+  logger.f('Fatal error occurred, this should carry new labels');
+  logger.i('Just for you info here');
+  logger.lokiClient?.removeLabel('user');
+  logger.i('Just for you info here');
+  logger.lokiClient?.resetLabels();
+  logger.i('Now labels are reset');
+
+  // Dispose the logger to free up resources
+  logger.dispose();
 }
