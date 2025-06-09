@@ -1,3 +1,6 @@
+### 1.0.4
+Released on 2025-06-09
+* Fixed [issue-6](https://github.com/Dammyololade/loki_logger/issues/6)
 ### 1.0.3
 Released on 2025-05-23
 * Exposed functions to update labels

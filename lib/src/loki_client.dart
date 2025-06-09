@@ -2,7 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:loki_logger/src/loki_config.dart';
+
+import 'log_event.dart';
+import 'log_level.dart';
+import 'log_output.dart';
+import 'log_printer.dart';
+import 'loki_config.dart';
 
 class LokiClient {
   /// Configuration for the logger to connect to Loki Server
@@ -45,8 +50,7 @@ class LokiClient {
     String? loggerName,
     Map<String, String>? customLabels,
   }) {
-    final timestamp =
-        config.replaceTimestamp ? DateTime.now() : (time ?? DateTime.now());
+    final timestamp = config.replaceTimestamp ? DateTime.now() : (time ?? DateTime.now());
     final nanoseconds = timestamp.microsecondsSinceEpoch * 1000;
 
     // Combine message with error and stack trace if present
@@ -96,8 +100,7 @@ class LokiClient {
     }
 
     // Format labels as Loki expects: {key="value",key2="value2"}
-    final formattedLabels =
-        allLabels.entries.map((e) => '${e.key}="${e.value}"').join(',');
+    final formattedLabels = allLabels.entries.map((e) => '${e.key}="${e.value}"').join(',');
 
     return '{$formattedLabels}';
   }
@@ -115,7 +118,6 @@ class LokiClient {
   /// Sends logs to Loki server
   Future<void> _sendLogs(List<Map<String, dynamic>> logs) async {
     if (logs.isEmpty) return;
-    final http.Response response;
 
     try {
       // Prepare streams for Loki API
@@ -172,22 +174,23 @@ class LokiClient {
 
       // Send to Loki
       final uri = Uri.parse('${config.host}/loki/api/v1/push');
-      response = await http
+      final response = await http
           .post(uri, headers: headers, body: jsonEncode(payload))
           .timeout(Duration(milliseconds: config.timeout ?? 30000));
+      if (response.statusCode >= 400) {
+        _printError('LokiLogger: Error sending logs: ${response.statusCode} ${response.body}');
+      }
     } catch (e) {
       // If not clearing on error, add logs back to queue
       if (!config.clearOnError && config.batching) {
         _queue.addAll(logs);
       }
-      rethrow;
+      _printError('LokiLogger: Error sending logs: $e');
     }
+  }
 
-    if (response.statusCode >= 400) {
-      throw Exception(
-        'LokiLogger: Error sending logs: ${response.statusCode} ${response.body}',
-      );
-    }
+  void _printError(String error) {
+    ConsoleOutput().output(PrettyPrinter().log(LogEvent(level: Level.error, message: error)));
   }
 
   /// Adds labels to the logger
