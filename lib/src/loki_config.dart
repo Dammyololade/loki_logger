@@ -21,6 +21,9 @@ class LokiConfig {
   /// Timeout for requests to Grafana Loki in milliseconds
   final int? timeout;
 
+  /// Bearer authentication token to access Loki through Grafana’s data source proxy over HTTP
+  final String? bearerToken;
+
   /// Basic authentication credentials to access Loki over HTTP
   final String? basicAuth;
 
@@ -33,5 +36,9 @@ class LokiConfig {
     this.labels,
     this.timeout,
     this.basicAuth,
-  });
+    this.bearerToken,
+  }) : assert(
+          bearerToken == null || basicAuth == null,
+          'Cannot use both bearer token and basic auth at the same time',
+        );
 }
