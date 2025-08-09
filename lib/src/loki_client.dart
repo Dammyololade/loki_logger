@@ -167,6 +167,10 @@ class LokiClient {
       // Prepare request
       final headers = <String, String>{'Content-Type': 'application/json'};
 
+      // Authentication headers
+      if (config.bearerToken != null) {
+        headers['Authorization'] = 'Bearer ${config.bearerToken}';
+      }
       if (config.basicAuth != null) {
         final encodedAuth = base64Encode(utf8.encode(config.basicAuth!));
         headers['Authorization'] = 'Basic $encodedAuth';
