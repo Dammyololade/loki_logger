@@ -1,3 +1,5 @@
+### 1.1.0
+Added support for Bearer Authentication thanks to [Julia Werner](https://github.com/juliaWernerLime)
 ### 1.0.4
 Released on 2025-06-09
 * Fixed [issue-6](https://github.com/Dammyololade/loki_logger/issues/6)
@@ -9,7 +11,7 @@ Released on 2025-05-23
 Released on 2025-05-23
 * Added Support for dart 3.2
 * Fixed issues with batching logs
-* Removed flutter dependency thanks to (Nicola Verbeeck)[https://github.com/NicolaVerbeeck]
+* Removed flutter dependency thanks to [Nicola Verbeeck](https://github.com/NicolaVerbeeck)
 
 ## 1.0.1
 Released on 2025-05-14
