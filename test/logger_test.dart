@@ -110,6 +110,58 @@ void main() {
       // Just verify it doesn't throw an exception
       expect(() => loggerWithConfig.i('Test with config'), returnsNormally);
     });
+
+    test('should add labels through logger', () {
+      when(mockFilter.shouldLog(any)).thenReturn(true);
+      const config = LokiConfig(host: 'http://localhost:3100');
+      final loggerWithConfig = LokiLogger(
+        name: 'LoggerWithConfig',
+        filter: mockFilter,
+        output: mockOutput,
+        config: config,
+      );
+
+      // Should not throw when adding labels
+      expect(
+        () => loggerWithConfig.addLabels({'key': 'value'}),
+        returnsNormally,
+      );
+    });
+
+    test('should remove label through logger', () {
+      when(mockFilter.shouldLog(any)).thenReturn(true);
+      const config = LokiConfig(host: 'http://localhost:3100');
+      final loggerWithConfig = LokiLogger(
+        name: 'LoggerWithConfig',
+        filter: mockFilter,
+        output: mockOutput,
+        config: config,
+      );
+
+      // Should not throw when removing labels
+      expect(() => loggerWithConfig.removeLabel('key'), returnsNormally);
+    });
+
+    test('should reset labels through logger', () {
+      when(mockFilter.shouldLog(any)).thenReturn(true);
+      const config = LokiConfig(host: 'http://localhost:3100');
+      final loggerWithConfig = LokiLogger(
+        name: 'LoggerWithConfig',
+        filter: mockFilter,
+        output: mockOutput,
+        config: config,
+      );
+
+      // Should not throw when resetting labels
+      expect(() => loggerWithConfig.resetLabels(), returnsNormally);
+    });
+
+    test('should handle label operations when lokiClient is null', () {
+      // Logger without config (no lokiClient)
+      expect(() => logger.addLabels({'key': 'value'}), returnsNormally);
+      expect(() => logger.removeLabel('key'), returnsNormally);
+      expect(() => logger.resetLabels(), returnsNormally);
+    });
   });
 
   group('LevelFilter', () {

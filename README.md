@@ -135,6 +135,43 @@ LokiConfig(
 );
 ```
 
+### Dynamic Label Management
+
+You can add, remove, or reset labels at runtime. This is useful for adding contextual information like user IDs, session IDs, or other dynamic metadata:
+
+```dart
+final logger = LokiLogger(
+  config: LokiConfig(
+    host: 'https://loki.example.com',
+    labels: {'app': 'my_app'},
+  ),
+);
+
+// Add new labels (will be included in all subsequent logs)
+logger.addLabels({
+  'user_id': '12345',
+  'session_id': 'abc-def-ghi',
+});
+
+logger.i('User action logged'); // Includes user_id and session_id labels
+
+// Remove a specific label
+logger.removeLabel('session_id');
+
+logger.i('Another action'); // Only includes user_id label
+
+// Reset all labels (removes all labels added via addLabels or config)
+logger.resetLabels();
+
+logger.i('Final action'); // No additional labels
+```
+
+**Note:** Labels added via `addLabels()` persist across all subsequent log calls until removed or reset. You can also add one-time labels to individual log calls using the `customLabels` parameter:
+
+```dart
+logger.i('Special event', null, null, {'event_type': 'purchase'});
+```
+
 ## Best Practices
 
 1. **Configure Appropriate Log Levels**: Use different levels for development and production
