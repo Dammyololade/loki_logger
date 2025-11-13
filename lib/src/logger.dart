@@ -137,6 +137,47 @@ class LokiLogger {
     }
   }
 
+  /// Adds labels to the logger
+  ///
+  /// These labels will be included in all subsequent log messages sent to Loki.
+  /// Labels can be used to add contextual information like user IDs, session IDs, etc.
+  ///
+  /// Example:
+  /// ```dart
+  /// logger.addLabels({
+  ///   'user_id': '12345',
+  ///   'session_id': 'abc-def-ghi',
+  /// });
+  /// ```
+  void addLabels(Map<String, String> labels) {
+    lokiClient?.addLabels(labels);
+  }
+
+  /// Removes a specific label from the logger
+  ///
+  /// The removed label will no longer be included in subsequent log messages.
+  ///
+  /// Example:
+  /// ```dart
+  /// logger.removeLabel('user_id');
+  /// ```
+  void removeLabel(String key) {
+    lokiClient?.removeLabel(key);
+  }
+
+  /// Removes all labels from the logger
+  ///
+  /// This clears all labels that were added via [addLabels] or in the config.
+  /// Subsequent log messages will only include labels specified in [customLabels] parameter.
+  ///
+  /// Example:
+  /// ```dart
+  /// logger.resetLabels();
+  /// ```
+  void resetLabels() {
+    lokiClient?.resetLabels();
+  }
+
   /// Disposes resources used by this logger
   ///
   /// This should be called when the logger is no longer needed

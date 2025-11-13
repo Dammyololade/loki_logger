@@ -60,7 +60,7 @@ void main() {
     });
   }
 
-  logger.lokiClient?.addLabels({
+  logger.addLabels({
     'user': 'John Doe',
     'device': 'iPhone',
     'os': 'iOS',
@@ -68,9 +68,9 @@ void main() {
   });
   logger.f('Fatal error occurred, this should carry new labels');
   logger.i('Just for you info here');
-  logger.lokiClient?.removeLabel('user');
+  logger.removeLabel('user');
   logger.i('Just for you info here');
-  logger.lokiClient?.resetLabels();
+  logger.resetLabels();
   logger.i('Now labels are reset');
 
   // Dispose the logger to free up resources

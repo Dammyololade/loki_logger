@@ -1,3 +1,7 @@
+### 1.2.0
+Released on 2025-11-13
+Added support for managing labels
+
 ### 1.1.0
 Added support for Bearer Authentication thanks to [Julia Werner](https://github.com/juliaWernerLime)
 ### 1.0.4

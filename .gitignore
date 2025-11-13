@@ -31,3 +31,5 @@ migrate_working_dir/
 build/
 example/lib/constant.dart
 example/lib/runner.dart
+
+/coverage/
