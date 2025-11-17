@@ -35,3 +35,4 @@ example/lib/runner.dart
 coverage/
 coverage_reports/
 coverage.lcov
+.smart_coverage_cache
