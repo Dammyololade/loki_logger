@@ -1,0 +1,32 @@
+name: Validate via Comment
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  validate-on-comment:
+    name: 🎫 Validate Ticket
+    runs-on: ubuntu-latest
+    # Only run if the comment is on a PR and contains the slash command
+    if: >
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/validate-bot')
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
+
+    steps:
+      - name: Extract inputs
+        id: parse
+        run: |
+          PR_NUMBER="${{ github.event.issue.number }}"
+          echo "pr_number=${PR_NUMBER}" >> "$GITHUB_OUTPUT"
+
+      - name: Run ticket validation action
+        uses: dammyololade/ticket-pr-validation-action@v1.0.4
+        with:
+          linear-api-key: ${{ secrets.LINEAR_API_KEY }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ steps.parse.outputs.pr_number }}
